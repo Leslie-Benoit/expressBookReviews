@@ -5,10 +5,16 @@ let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
 
-public_users.post("/register", (req,res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+public_users.get('/isbn/:isbn', function (req, res) {
+    const isbn = req.params.isbn; // get ISBN from URL
+
+    if (books[isbn]) {
+        return res.json(books[isbn]); // return book details as JSON
+    } else {
+        return res.status(404).json({message: "Book not found"});
+    }
 });
+
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
@@ -17,10 +23,16 @@ public_users.get('/',function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
- });
+public_users.get('/isbn/:isbn', function (req, res) {
+    const isbn = req.params.isbn; // get the ISBN from the URL
+
+    if (books[isbn]) {           // check if the book exists
+        return res.json(books[isbn]); // return book details as JSON
+    } else {
+        return res.status(404).json({message: "Book not found"}); // if not found
+    }
+});
+
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
